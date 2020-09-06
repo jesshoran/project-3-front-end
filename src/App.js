@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 import NavBar from "./components/NavBar";
-// import DogList from "./components/DogList/DogList";
+import DogList from "./components/DogList/DogList";
 import SignUpForm from "./components/SignUpForm";
 import LogInForm from "./components/LogInForm";
 import LogOut from "./components/LogOut";
@@ -112,7 +112,7 @@ const App = (props) => {
             path="/"
             render={() => {
               return 
-              // <DogList isLoggedIn={isLoggedIn} />;
+              <DogList isLoggedIn={isLoggedIn} />;
             }}
           />
         </Switch>
