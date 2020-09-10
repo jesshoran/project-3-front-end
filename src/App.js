@@ -34,11 +34,30 @@ const App = (props) => {
       setIsLoggedIn(true);
       // decode the token, grab the id out of it:
       const decodedToken = JSON.parse(atob(localStorage.token.split(".")[1]))
-      setState({...state, name: localStorage.name, email: localStorage.email, id: decodedToken.id})
+      setState({
+        ...state, 
+        name: localStorage.name, 
+        email: localStorage.email, 
+        id: decodedToken.id,
+        // favorites
+      })
     } else {
       setIsLoggedIn(false);
     }
   }, [isLoggedIn]);
+
+  // If you pass an empty array to useEffect, it will only run this
+  // code once (per lifecycle of the component)
+  useEffect(()=>{
+    let favorites = []
+    if (localStorage.favorites){
+      favorites = JSON.parse(localStorage.favorites)
+    }
+    setState({
+      ...state,
+      favorites
+    })
+  }, [])
 
   const handleLogOut = () => {
     setState({
@@ -79,7 +98,12 @@ const App = (props) => {
       console.log(err);
     }
   };
-
+  // const handleEdit = (user) => {
+  //   setState(
+  //     { ...state, 
+  //     }
+  //   )
+  // }
 
   const handleLogIn = async (event) => {
     event.preventDefault();
@@ -110,8 +134,21 @@ const App = (props) => {
       }
     }
   };
+  
+
+  const handleUpdateFavorites = (restaurant) => {
+    setState(
+      { ...state, 
+        favorites: [
+          ...state.favorites, 
+          restaurant
+        ]
+      }
+    )
+  }
+
   return (
-   
+    
     <div>
       <NavBar isLoggedIn={isLoggedIn} />
       <div className="body">
@@ -121,12 +158,12 @@ const App = (props) => {
             render={(props) => {
               return (
                 <SignUpForm
-                  isLoggedIn={isLoggedIn}
-                  handleInput={handleInput}
-                  handleSignUp={handleSignUp}
+                isLoggedIn={isLoggedIn}
+                handleInput={handleInput}
+                handleSignUp={handleSignUp}
                 />
-              );
-            }}
+                );
+              }}
           />
           <Route
             path="/logout"
@@ -137,9 +174,21 @@ const App = (props) => {
                 handleLogOut={handleLogOut} 
                 />
                 
-              );
-            }}
+                );
+              }}
           />
+              <Route
+                path="/:id/edit"
+                render={(props) => {
+                  return (
+                    <UserEdit 
+                    isLoggedIn={isLoggedIn} 
+                    user={state}
+                    />
+                    
+                  );
+                }}
+              />
           <Route
             path="/allusers"
             render={(props) => {
@@ -166,17 +215,6 @@ const App = (props) => {
             }}
           />
           <Route
-            path="/${_id}/edit"
-            render={(props) => {
-              return (
-                <UserEdit 
-                isLoggedIn={isLoggedIn} 
-                />
-                
-              );
-            }}
-          />
-          <Route
             path="/login"
             render={(props) => {
               return (
@@ -196,7 +234,9 @@ const App = (props) => {
                 <RestaurantShow 
                   isLoggedIn={isLoggedIn} 
                   handleLogIn={handleLogIn}
-                  user={state}  />
+                  user={state} 
+                  handleUpdateFavorites={handleUpdateFavorites}
+                />
               )
             }}
           />

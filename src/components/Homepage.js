@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import Jumbotron from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 
 
 function Homepage(props) {
@@ -33,11 +34,15 @@ function Homepage(props) {
                   <p>Meet other Foodie Friends!</p>
                 </div>
 
-                
+              
            </div>
+           </Container>
+           <hr/>
+
+           {/* {props.isLoggedIn ? "" :           
+           <Link to ="/signup"> <button className="restaurant-button"><p>Sign Up Today!</p></button></Link>  */}
 
 
-    </Container>
 
 
     </div>

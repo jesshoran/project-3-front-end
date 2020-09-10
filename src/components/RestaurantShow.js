@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Jumbotron from 'react-bootstrap/Button';
 
 // import "./RestaurantShow.css";
 function RestaurantShow(props) {
@@ -39,8 +40,29 @@ function RestaurantShow(props) {
   const addToFavorites = () => {
     console.log(restaurant)
     console.log('BELOW')
-    console.log(props.user.favorites)
-    props.user.favorites.push(restaurant)
+    // console.log(props.user.favorites)
+    // props.user.favorites.push(restaurant)
+    if (localStorage.favorites){
+      // Add restaurant to localStorage.favorites
+      // localStorage only supports strings, so to use an array, we need to
+      // JSON.stringify to store it, and JSON.parse, to retrieve it.
+      
+      // Get current favoriates and store it as an array:
+      const prevFavorites = JSON.parse(localStorage.favorites)
+
+      // add the new restaruant to the temporary favorites array:
+      let updatedFavorites = [...prevFavorites, restaurant]
+
+      // save it back to localStorage:
+      localStorage.favorites = JSON.stringify(updatedFavorites)
+      
+    } else {
+      localStorage.favorites = JSON.stringify([restaurant])
+      // create localStorage.favorites
+    }
+
+    // Update the state in App component so other pages can access it:
+    props.handleUpdateFavorites(restaurant)
     
 
     // if (props.isLoggedIn === true) {
@@ -57,14 +79,18 @@ function RestaurantShow(props) {
   const { name, address, likes, reviews, image_url } = restaurant;
   // const {_id, email, photo, password, favorites } = user;
   return (
-    <div className="restaurant-preview">
+    <Jumbotron className="jumbotron-3">
+    <div className="restaurant-preview container-changes-2">
+    <h1>{name}</h1>
       <img src={image_url} alt={name} className="restaurant-image" />
-      <h3>{name}</h3>
-      <button onClick={addToFavorites}>Add to Favorites</button>
+
+  
       {props.isLoggedIn ? <h4>Likes: {likes}</h4> : ""}
       {/* {props.isLoggedIn ? <h4>Reviews: {reviews.username}: {reviews.text}</h4> : ""} */}
-      {/* {props.isLoggedIn ? <h4>Address: {address}</h4> : ""} */}
+      {props.isLoggedIn ? <h4>Address: {address}</h4> : ""}
+      <button onClick={addToFavorites}>Add to Favorites</button>
     </div>
+    </Jumbotron>
   );
 }
 // console.log(username)
