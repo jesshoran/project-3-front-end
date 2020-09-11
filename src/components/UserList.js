@@ -32,7 +32,7 @@ const UserList = (props) => {
         style={{ width: '18rem' }}
         className="user-card card text-center m-2 "
         key={i}>
-        <Card.Img variant="top" src={user.photo} alt="Add Profile Picture!" />
+        <Card.Img className="user-image" variant="top" src={user.photo} alt="Add Profile Picture!" />
         <Card.Body>
           <Card.Title>{user.name}</Card.Title>
           <Card.Text>Email: {user.email} </Card.Text>
@@ -44,7 +44,7 @@ const UserList = (props) => {
   return (
 
   <Container fluid>
-        <h1>Check out our members!</h1>
+        <h1 style={{margin: 20}}>Check out our members!</h1>
     <CardGroup className="user-card-group">
     {showUsers}
     </CardGroup>

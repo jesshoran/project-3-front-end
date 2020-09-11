@@ -167,6 +167,10 @@ nav li {
   // justify-content: space-evenly;
 }
 
+.user-image {
+  height: 150px;
+}
+
 .user-card-group {
   align-items: center;
   justify-content: space-evenly;
@@ -309,7 +313,11 @@ h4 {
 }
 
 
-
+.delete-button {
+  width: 200px;
+  position: relative;
+  left: 30%;
+}
 
 .jumbotron:hover {
   color: black;
@@ -321,4 +329,10 @@ h4 {
 
 .jumbotron-3:hover {
   color:#800000;;
+}
+
+ul {
+  list-style-type: none;
+  position: relative;
+  left: -4%;
 }

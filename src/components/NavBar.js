@@ -13,7 +13,7 @@ function NavBar(props) {
   if (props.isLoggedIn) {
     navBarItems.push(
         <li key={2}>
-          <Link to="/restaurants">Restaurants</Link>
+          <Link to="/restaurants">Restaurants/Bars</Link>
         </li>
       );
       navBarItems.push(
